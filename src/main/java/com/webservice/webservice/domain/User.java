@@ -1,5 +1,7 @@
 package com.webservice.webservice.domain;
+
 import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +13,7 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode(exclude = {"name", "email", "phone", "password"})
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
