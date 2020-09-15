@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @ToString
 @EqualsAndHashCode(exclude = {"name", "email", "phone", "password"})
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_user")
@@ -26,6 +25,13 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
+    public User(Integer id, String name, String email, String phone, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+    }
 
     @JsonIgnore
     @OneToMany(mappedBy = "client")
