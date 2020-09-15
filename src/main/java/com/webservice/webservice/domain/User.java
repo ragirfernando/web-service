@@ -2,11 +2,10 @@ package com.webservice.webservice.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,6 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "tb_user")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -24,4 +24,8 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String password;
+
+
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
 }
