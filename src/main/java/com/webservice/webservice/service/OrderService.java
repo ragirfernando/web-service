@@ -19,7 +19,7 @@ public class OrderService {
     }
 
     public Order findById(Integer id){
-        Optional<Order> user = orderRepository.findById(id);
-        return user.get();
+        Optional<Order> order = orderRepository.findById(id);
+        return order.get();
     }
 }
