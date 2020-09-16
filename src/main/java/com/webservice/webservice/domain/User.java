@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(exclude = {"name", "email", "phone", "password"})
+@EqualsAndHashCode(exclude = {"name", "email", "phone", "password", "orders"})
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_user")

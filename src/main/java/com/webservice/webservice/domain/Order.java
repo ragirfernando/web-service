@@ -11,7 +11,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(exclude = {"moment", "cliente"})
+@EqualsAndHashCode(exclude = {"moment", "client", "orderStatus"})
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_order")
@@ -20,7 +20,6 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
