@@ -2,17 +2,14 @@ package com.webservice.webservice.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.webservice.webservice.enums.OrderStatus;
-import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode(exclude = {"moment", "client", "orderStatus"})
-@NoArgsConstructor
+
 @Entity
 @Table(name = "tb_order")
 public class Order implements Serializable {
@@ -30,11 +27,53 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
 
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
+
+    public Order() {
+    }
+
     public Order(Integer id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
         setOrderStatus(orderStatus);
         this.client = client;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Instant getMoment() {
+        return moment;
+    }
+
+    public void setMoment(Instant moment) {
+        this.moment = moment;
+    }
+
+    public void setOrderStatus(Integer orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public User getClient() {
+        return client;
+    }
+
+    public void setClient(User client) {
+        this.client = client;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<OrderItem> items) {
+        this.items = items;
     }
 
     public OrderStatus getOrderStatus() {
@@ -43,5 +82,20 @@ public class Order implements Serializable {
 
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus.getCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        return id.equals(order.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

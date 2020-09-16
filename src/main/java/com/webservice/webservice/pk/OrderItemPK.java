@@ -2,18 +2,13 @@ package com.webservice.webservice.pk;
 
 import com.webservice.webservice.domain.Order;
 import com.webservice.webservice.domain.Product;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
-@Getter
-@Setter
-@EqualsAndHashCode
+
 @Embeddable
 public class OrderItemPK implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -26,4 +21,37 @@ public class OrderItemPK implements Serializable {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderItemPK that = (OrderItemPK) o;
+
+        if (!order.equals(that.order)) return false;
+        return product.equals(that.product);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = order.hashCode();
+        result = 31 * result + product.hashCode();
+        return result;
+    }
 }

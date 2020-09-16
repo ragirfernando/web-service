@@ -1,14 +1,8 @@
 package com.webservice.webservice.config;
 
-import com.webservice.webservice.domain.Category;
-import com.webservice.webservice.domain.Order;
-import com.webservice.webservice.domain.Product;
-import com.webservice.webservice.domain.User;
+import com.webservice.webservice.domain.*;
 import com.webservice.webservice.enums.OrderStatus;
-import com.webservice.webservice.repository.CategoryRepository;
-import com.webservice.webservice.repository.OrderRepository;
-import com.webservice.webservice.repository.ProductRepository;
-import com.webservice.webservice.repository.UserRepository;
+import com.webservice.webservice.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +28,9 @@ public class TestConfig implements CommandLineRunner{
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -70,5 +67,11 @@ public class TestConfig implements CommandLineRunner{
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 
+        OrderItem orderItem1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem orderItem2 = new OrderItem(o1, p3, 1, p4.getPrice());
+        OrderItem orderItem3 = new OrderItem(o2, p3, 2, p1.getPrice());
+        OrderItem orderItem4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3, orderItem4));
     }
 }
