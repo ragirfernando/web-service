@@ -10,7 +10,7 @@ import java.util.Set;
 
 
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"name", "description", "price", "imgUrl", "categories"})
+@EqualsAndHashCode(exclude = {"name", "description", "price", "imgUrl", "categories", "items"})
 @Entity
 @Table(name = "tb_product")
 public class Product implements Serializable {
@@ -32,6 +32,16 @@ public class Product implements Serializable {
     @Getter @Setter
     private String imgUrl;
 
+    @Getter
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
+
     public Product(Integer id, String name, String description, Double price, String imgUrl) {
         this.id = id;
         this.name = name;
@@ -40,11 +50,13 @@ public class Product implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    @Getter
-    @ManyToMany
-    @JoinTable(name = "tb_product_category",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories = new HashSet<>();
+    @JsonIgnore
+    public Set<Order> getOrders(){
+        Set<Order> set = new HashSet<>();
+        for (OrderItem x : items) {
+            set.add(x.getOrder());
+        }
+        return set;
+    }
 
 }
