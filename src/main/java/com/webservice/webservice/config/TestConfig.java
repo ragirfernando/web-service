@@ -15,7 +15,7 @@ import java.util.List;
 
 @Configuration
 @Profile("test")
-public class TestConfig implements CommandLineRunner{
+public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private UserRepository userRepository;
