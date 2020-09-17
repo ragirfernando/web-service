@@ -34,6 +34,12 @@ public class UserController {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody User user)  {
+        user = userService.update(id, user);
+        return ResponseEntity.ok().body(user);
+    }
     @PostMapping()
     public ResponseEntity<User> insert(@RequestBody User user){
         user = userService.insert(user);
