@@ -19,25 +19,25 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public User findById(Integer id){
+    public User findById(Integer id) {
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public User insert(User user){
-       return userRepository.save(user);
+    public User insert(User user) {
+        return userRepository.save(user);
     }
 
-    public User update(Integer id, User user){
+    public User update(Integer id, User user) {
         try {
             User entity = userRepository.getOne(id);
             updateData(entity, user);
             return userRepository.save(entity);
-        }catch (EntityNotFoundException entityNotFoundException){
+        } catch (EntityNotFoundException entityNotFoundException) {
             throw new ResourceNotFoundException(id);
         }
 
@@ -49,12 +49,12 @@ public class UserService {
         entity.setPhone(user.getPhone());
     }
 
-    public void delete(Integer id){
+    public void delete(Integer id) {
         try {
             userRepository.deleteById(id);
-        }catch (EmptyResultDataAccessException emptyResultDataAccessException){
+        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             throw new ResourceNotFoundException(id);
-        }catch (DataIntegrityViolationException dataIntegrityViolationException){
+        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             throw new DatabaseException(dataIntegrityViolationException.getMessage());
         }
     }
