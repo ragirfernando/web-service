@@ -1,9 +1,12 @@
 package com.webservice.webservice.service;
 
 import com.webservice.webservice.domain.User;
+import com.webservice.webservice.exceptions.DatabaseException;
 import com.webservice.webservice.exceptions.ResourceNotFoundException;
 import com.webservice.webservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,6 +44,12 @@ public class UserService {
     }
 
     public void delete(Integer id){
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        }catch (EmptyResultDataAccessException emptyResultDataAccessException){
+            throw new ResourceNotFoundException(id);
+        }catch (DataIntegrityViolationException dataIntegrityViolationException){
+            throw new DatabaseException(dataIntegrityViolationException.getMessage());
+        }
     }
 }
